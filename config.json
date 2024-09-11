@@ -1,0 +1,75 @@
+{
+    "inbounds": [
+      {
+        "listen": "127.0.0.1", //只监听本机，避免本机外的机器探测到下面端口。
+        "port": 2023, //VLESS+SplitHTTP 监听端口
+        "protocol": "vless",
+        "settings": {
+          "clients": [
+            {
+              "id": "492f8b68-81ac-4760-83d7-b095706eea88", //修改为自己的 UUID
+              "email": "2023@gmail.com"
+            }
+          ],
+          "decryption": "none"
+        },
+        "streamSettings": {
+          "network": "splithttp",
+          "splithttpSettings": {
+            "path": "/"
+          }
+        },
+        "sniffing": {
+          "enabled": true,
+          "destOverride": [
+            "http",
+            "tls"
+          ]
+        }
+      }
+    ],
+    "routing": {
+      "rules": [
+        {
+          "type": "field",
+          "protocol": [
+            "bittorrent"
+          ],
+          "outboundTag": "blocked"
+        }
+      ]
+    },
+    "outbounds": [
+      {
+        "tag": "WARP",
+        "protocol": "wireguard",
+        "settings": {
+          "secretKey": "gFgtEx9vUdsllimbZYlb1nrvZTB2MhjywcCIu16psnI=",
+          "address": [
+            "172.16.0.2/32"
+          ],
+          "peers": [
+            {
+              "publicKey": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+              "allowedIPs": [
+                "0.0.0.0/0",
+                "::/0"
+              ],
+              "endpoint": "162.159.192.229:955"
+            }
+          ],
+          "reserved": [194,151,82],
+          "mtu": 1280
+        }
+      },
+      {
+        "protocol": "freedom",
+        "settings": {}
+      },
+      {
+        "tag": "blocked",
+        "protocol": "blackhole",
+        "settings": {}
+      }
+    ]
+  }
