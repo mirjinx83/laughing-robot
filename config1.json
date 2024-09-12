@@ -1,0 +1,67 @@
+
+{
+  "log": {
+    "loglevel": "warning"
+  },
+"routing": {
+    "rules": [
+      {
+        "type": "field",
+        "protocol": [
+          "bittorrent"
+        ],
+        "outboundTag": "blocked"
+      }
+    ]
+  },
+  "inbounds": [
+    {
+      "listen": "0.0.0.0",
+      "port": 3000,
+      "protocol": "vless",
+      "settings": {
+        "clients": [
+          {
+            "id": "492f8b68-81ac-4760-83d7-b095706eea88"
+          }
+        ],
+        "decryption": "none"
+      },
+      "streamSettings": {
+        "network": "ws"
+      }
+    }
+  ],
+  "outbounds": [
+      {
+        "tag": "WARP",
+        "protocol": "wireguard",
+        "settings": {
+          "secretKey": "gFgtEx9vUdsllimbZYlb1nrvZTB2MhjywcCIu16psnI=",
+          "address": [
+            "172.16.0.2/32"
+          ],
+          "peers": [
+            {
+              "publicKey": "bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",
+              "allowedIPs": [
+                "0.0.0.0/0",
+                "::/0"
+              ],
+              "endpoint": "162.159.192.229:955"
+            }
+          ],
+          "reserved": [194,151,82],
+          "mtu": 1280
+        }
+      },
+    {
+      "protocol": "freedom",
+      "tag": "direct"
+    },
+    {
+      "protocol": "blackhole",
+      "tag": "block"
+    }
+  ]
+}
